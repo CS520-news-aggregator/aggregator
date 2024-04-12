@@ -2,11 +2,21 @@ from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from routers.observer import observer_router, update_subscribers
+from contextlib import asynccontextmanager
+import asyncio
+from daemons.fake_aggregator import FakeAggDaemon
 
 origins = ["*"]
+AGGREGATION_DELAY = 60 # in seconds
 
 
-app = FastAPI(title="News Annotator Aggregator", version="1.0")
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    asyncio.create_task(FakeAggDaemon(AGGREGATION_DELAY).start_daemon())
+    yield
+
+
+app = FastAPI(title="News Annotator Aggregator", version="1.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

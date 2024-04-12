@@ -30,7 +30,7 @@ def update_subscribers(message: str):
         url = f"http://{subscriber.ip_address}:{subscriber.port}/subscriber/update"
 
         try:
-            response = requests.post(url, json={"message": message}, timeout=1)
+            response = requests.post(url, json={"message": message}, timeout=5)
         except requests.exceptions.RequestException:
             print(f"Could not send update to {subscriber}")
             continue
