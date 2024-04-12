@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Body, HTTPException, Request
 from fastapi.encoders import jsonable_encoder
 from models.observer import Subscriber
+from models.data import Message
 import requests
 
 
@@ -27,10 +28,12 @@ async def get_subscribers(_: Request):
 
 def update_subscribers(message: str):
     for subscriber in LIST_OBSERVERS:
+        print(f"Sending update to {subscriber}")
         url = f"http://{subscriber.ip_address}:{subscriber.port}/subscriber/update"
 
         try:
-            response = requests.post(url, json={"message": message}, timeout=5)
+            message = Message(post_id=message, message="New post added")
+            response = requests.post(url, json=jsonable_encoder(message), timeout=5)
         except requests.exceptions.RequestException:
             print(f"Could not send update to {subscriber}")
             continue
