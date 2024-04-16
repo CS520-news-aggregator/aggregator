@@ -1,8 +1,17 @@
 import requests
 import json
+from dotenv import load_dotenv
+import os
+
 
 
 global_exception = None
+load_dotenv()
+apiKey = os.getenv('API_KEY')
+if apiKey:
+    print("API key retrieval successful")
+else:
+    print("API key not found. Please check your .env file.")
 
 class AggObject:
     def __init__(self,  title, link, media, author, date):
@@ -15,7 +24,7 @@ class AggObject:
 
 
 
-def makeCallEverything(apiKey, keywords, searchIn="title", fromDate="", to="", language="en", sortBy="popularity", pageSize=5):
+def makeCallEverything(apiKey,keywords, searchIn="title", fromDate="", to="", language="en", sortBy="popularity", pageSize=5):
     url = f'https://newsapi.org/v2/everything?q={keywords}&apiKey={apiKey}&searchIn={searchIn}&from={fromDate}&to={to}&sortBy{sortBy}&language={language}&pageSize={pageSize}'
     try:
         response = requests.get(url)
@@ -55,10 +64,12 @@ def parseResponse(response):
         
 
 def main():
-    apiKey = 'b514c4debf004efa86d7494221d8'
-    response = makeCallEverything(apiKey, 'apple')
+#     # apiKey = 
+    response = makeCallEverything(apiKey, 'united nations', 'content')
     if response == None:
         print("1")
+    for article in response:
+        print(article.title)
         #what do we want to do in case API throws exception?
     #transport objects to database from here
     
