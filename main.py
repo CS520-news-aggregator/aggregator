@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 import asyncio
 
 origins = ["*"]
-AGGREGATION_DELAY = 60  # seconds
+AGGREGATION_DELAY = 60 * 60  # 1 hour
 
 
 @asynccontextmanager

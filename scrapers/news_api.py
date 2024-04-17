@@ -56,7 +56,7 @@ def call_everything(
         return None
 
 
-def call_top_headline(category, keyWords, pageSize=5, country="us", page=1):
+def call_top_headline(category=None, keyWords=None, pageSize=5, country="us", page=1):
     url = "https://newsapi.org/v2/top-headlines"
     try:
         response = requests.get(
@@ -111,7 +111,7 @@ def parse_response(response):
 
 
 def test_calls():
-    response = call_top_headline(None, None)
+    response = call_top_headline()
 
     if response is None:
         print("Failed to retrieve data")
