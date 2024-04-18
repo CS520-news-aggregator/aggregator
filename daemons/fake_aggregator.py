@@ -11,15 +11,15 @@ class FakeAggDaemon(BaseDaemon):
     async def task(self) -> None:
         print("Fake Aggregator Daemon task started")
 
-        # post = Post(
-        #     title="fake title",
-        #     link="fake link",
-        #     media="fake media",
-        #     author="fake author",
-        #     date="fake date",
-        # )
+        post = Post(
+            title="fake title",
+            link="fake link",
+            media="fake media",
+            author="fake author",
+            date="fake date",
+        )
 
-        # if (post_id := add_data_to_db(post)) != -1:
-        #     update_subscribers(post_id)
+        if (post_id := add_data_to_db(post)) != -1:
+            update_subscribers(post_id)
 
         print("Fake Aggregator Daemon task finished")

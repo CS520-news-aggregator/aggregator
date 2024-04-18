@@ -20,7 +20,7 @@ class NewsAPIAggDaemon(BaseDaemon):
         super().__init__(self.task, delay)
 
     async def task(self) -> None:
-        print("NewsAPI Aggregator Daemon task started with page", self.page_number)
+        print("NewsAPI Aggregator Daemon task started with page=", self.page_number)
 
         # start_dt, end_dt = get_dt_week()
         # list_posts = call_everything(
