@@ -3,9 +3,8 @@ from routers.observer import update_subscribers
 from daemons.utils import add_data_to_db
 from scrapers.news_api import call_top_headline
 from datetime import datetime, timedelta
-from scrapers.constants import LIST_TOPICS
 
-PAGE_SIZE = 10
+PAGE_SIZE = 100
 
 
 def get_dt_week() -> tuple[str, str]:
@@ -22,25 +21,22 @@ class NewsAPIAggDaemon(BaseDaemon):
     async def task(self) -> None:
         print("NewsAPI Aggregator Daemon task started with page=", self.page_number)
 
-        # start_dt, end_dt = get_dt_week()
-        # list_posts = call_everything(
-        #     keywords=LIST_TOPICS,
-        #     fromDate=start_dt,
-        #     to=end_dt,
-        #     pageSize=PAGE_SIZE,
-        #     page=self.page_number,
-        # )
-
         list_posts = call_top_headline(
             pageSize=PAGE_SIZE,
             page=self.page_number,
         )
 
-        for post in list_posts:
-            if (post_id := add_data_to_db(post)) != -1:
-                update_subscribers(post_id)
-            else:
-                print("Error adding post to DB", str(post))
+        list_post_ids = []
 
-        self.page_number += 1
+        if not list_posts:
+            print("No posts to process. Encountered error with API")
+        else:
+            for post in list_posts:
+                if (post_id := add_data_to_db(post)) != -1:
+                    list_post_ids.append(post_id)
+                else:
+                    print("Error adding post to DB", str(post))
+            update_subscribers(list_post_ids)
+            self.page_number += 1
+
         print("NewsAPI Aggregator Daemon task finished")
