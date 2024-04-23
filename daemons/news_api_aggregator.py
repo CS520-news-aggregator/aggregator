@@ -4,7 +4,7 @@ from daemons.utils import add_data_to_db
 from scrapers.news_api import call_top_headline
 from datetime import datetime, timedelta
 
-PAGE_SIZE = 100
+PAGE_SIZE = 50
 
 
 def get_dt_week() -> tuple[str, str]:
