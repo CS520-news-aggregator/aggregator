@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body, HTTPException, Request
 from fastapi.encoders import jsonable_encoder
-from models.observer import Subscriber
-from models.data import Message
+from models.pub_sub import Subscriber
+from models.pub_sub import Message
 import requests
 
 

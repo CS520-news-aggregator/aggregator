@@ -1,5 +1,5 @@
 from daemons.base import BaseDaemon
-from models.data import Source
+from models.source import Source
 from routers.observer import update_subscribers
 from daemons.utils import add_data_to_db
 
