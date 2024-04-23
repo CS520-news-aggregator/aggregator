@@ -2,7 +2,7 @@ import requests
 from sys import exit
 from dotenv import load_dotenv
 import os
-from models.data import Post
+from models.data import Source
 
 
 load_dotenv()
@@ -92,7 +92,7 @@ def cleanup(response):
 
 
 def parse_response(response):
-    posts = []
+    sources = []
     for article in response["articles"]:
         try:
             params = {
@@ -102,12 +102,12 @@ def parse_response(response):
                 "author": article.get("author"),
                 "date": article.get("publishedAt"),
             }
-            post = Post(**create_params(params))
+            source = Source(**create_params(params))
         except Exception as exception_cur:
             print(f"Failed to parse article: {exception_cur}")
         else:
-            posts.append(post)
-    return posts
+            sources.append(source)
+    return sources
 
 
 def test_calls():

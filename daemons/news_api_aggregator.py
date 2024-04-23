@@ -21,22 +21,22 @@ class NewsAPIAggDaemon(BaseDaemon):
     async def task(self) -> None:
         print("NewsAPI Aggregator Daemon task started with page=", self.page_number)
 
-        list_posts = call_top_headline(
+        list_sources = call_top_headline(
             pageSize=PAGE_SIZE,
             page=self.page_number,
         )
 
-        list_post_ids = []
+        list_source_ids = []
 
-        if not list_posts:
-            print("No posts to process. Encountered error with API")
+        if not list_sources:
+            print("No sources to process. Encountered error with API")
         else:
-            for post in list_posts:
-                if (post_id := add_data_to_db(post)) != -1:
-                    list_post_ids.append(post_id)
+            for source in list_sources:
+                if (source_id := add_data_to_db(source)) != -1:
+                    list_source_ids.append(source_id)
                 else:
-                    print("Error adding post to DB", str(post))
-            update_subscribers(list_post_ids)
+                    print("Error adding source to DB", str(source))
+            update_subscribers(list_source_ids)
             self.page_number += 1
 
         print("NewsAPI Aggregator Daemon task finished")

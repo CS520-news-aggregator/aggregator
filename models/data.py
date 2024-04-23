@@ -2,7 +2,7 @@ from typing import List
 from pydantic import BaseModel
 
 
-class Post(BaseModel):
+class Source(BaseModel):
     title: str = "Unknown Title"
     link: str = "Unknown Link"
     media: str = "Unknown Media"
@@ -16,5 +16,5 @@ class Post(BaseModel):
 
 
 class Message(BaseModel):
-    post_ids: List[str]
+    source_ids: List[str]
     message: str

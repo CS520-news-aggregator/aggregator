@@ -5,5 +5,5 @@ class Subscriber(BaseModel):
     ip_address: str
     port: int
 
-    def __eq__(self, other):
+    def __eq__(self, other: BaseException):
         return self.ip_address == other.ip_address and self.port == other.port

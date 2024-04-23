@@ -26,13 +26,13 @@ async def get_subscribers(_: Request):
     }
 
 
-def update_subscribers(list_post_ids: list[str]) -> None:
+def update_subscribers(list_source_ids: list[str]) -> None:
     for subscriber in LIST_OBSERVERS:
         print(f"Sending update to {subscriber}")
         url = f"http://{subscriber.ip_address}:{subscriber.port}/subscriber/update"
 
         try:
-            message = Message(post_ids=list_post_ids, message="New posts added")
+            message = Message(source_ids=list_source_ids, message="New sources added")
             response = requests.post(url, json=jsonable_encoder(message), timeout=5)
         except requests.exceptions.RequestException:
             print(f"Could not send update to {subscriber}")
