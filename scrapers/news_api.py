@@ -2,7 +2,7 @@ import requests
 from sys import exit
 from dotenv import load_dotenv
 import os
-from models.data import Source
+from models.source import Source
 
 
 load_dotenv()
