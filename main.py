@@ -8,7 +8,6 @@ import asyncio
 
 origins = ["*"]
 AGGREGATION_DELAY = 60 * 60  # 1 hour
-# AGGREGATION_DELAY = 60  # 1 minute
 
 
 @asynccontextmanager
