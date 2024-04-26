@@ -26,7 +26,7 @@ def call_everything(
     fromDate="",
     to="",
     language="en",
-    sortBy="popularity",
+    sortBy="publishedAt",
     pageSize=5,
     page=1,
 ):
