@@ -22,7 +22,7 @@ def create_params(kwargs: dict):
 
 def call_everything(
     keywords,
-    searchIn="title",
+    searchIn="",
     fromDate="",
     to="",
     language="en",

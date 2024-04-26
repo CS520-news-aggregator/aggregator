@@ -1,10 +1,11 @@
 from daemons.base import BaseDaemon
 from routers.observer import update_subscribers
 from daemons.utils import add_data_to_db
-from scrapers.news_api import call_top_headline
+from scrapers.news_api import call_everything
 from datetime import datetime, timedelta
 
-PAGE_SIZE = 50
+PAGE_SIZE = 100
+PLACEHOLDER_KEYWORD = "the"
 
 
 def get_dt_week() -> tuple[str, str]:
@@ -21,7 +22,8 @@ class NewsAPIAggDaemon(BaseDaemon):
     async def task(self) -> None:
         print("NewsAPI Aggregator Daemon task started with page=", self.page_number)
 
-        list_sources = call_top_headline(
+        list_sources = call_everything(
+            keywords=PLACEHOLDER_KEYWORD,
             pageSize=PAGE_SIZE,
             page=self.page_number,
         )
