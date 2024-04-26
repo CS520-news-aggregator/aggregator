@@ -1,4 +1,7 @@
 import asyncio
+import os
+
+RUN_FIRST = os.getenv("RUN_FIRST", False).lower() in {"true"}
 
 
 class BaseDaemon:
@@ -14,7 +17,7 @@ class BaseDaemon:
 
     async def start_daemon(self) -> None:
         while True:
-            if self.first_run:
+            if self.first_run and RUN_FIRST:
                 await asyncio.sleep(120)  # Wait for other services to start
                 await self._execute_task()
                 self.first_run = False
