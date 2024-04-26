@@ -1,7 +1,8 @@
 import asyncio
 import os
 
-RUN_FIRST = os.getenv("RUN_FIRST", False).lower() in {"true"}
+RUN_FIRST = os.getenv("RUN_FIRST", "False").lower() in {"true"}
+RUN_WORKFLOW = os.getenv("RUN_WORKFLOW", "False").lower() in {"true"}
 
 
 class BaseDaemon:
@@ -13,7 +14,8 @@ class BaseDaemon:
         self.first_run = True
 
     async def _execute_task(self) -> None:
-        await self._task()
+        if RUN_WORKFLOW:
+            await self._task()
 
     async def start_daemon(self) -> None:
         while True:
