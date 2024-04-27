@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body, HTTPException, Request
 from fastapi.encoders import jsonable_encoder
 from models.pub_sub import Subscriber
-from models.pub_sub import Message
+from models.pub_sub import AggregatorMessage
 import requests
 
 
@@ -32,7 +32,7 @@ def update_subscribers(list_source_ids: list[str]) -> None:
         url = f"http://{subscriber.ip_address}:{subscriber.port}/subscriber/update"
 
         try:
-            message = Message(source_ids=list_source_ids, message="New sources added")
+            message = AggregatorMessage(source_ids=list_source_ids, message="New sources added")
             response = requests.post(url, json=jsonable_encoder(message), timeout=5)
         except requests.exceptions.RequestException:
             print(f"Could not send update to {subscriber}")
