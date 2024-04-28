@@ -1,18 +1,18 @@
 from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
+from daemons.news_api_aggregator import NewsAPIAggDaemon
 from routers.observer import observer_router, update_subscribers
 from contextlib import asynccontextmanager
 import asyncio
-from daemons.fake_aggregator import FakeAggDaemon
 
 origins = ["*"]
-AGGREGATION_DELAY = 60 # in seconds
+AGGREGATION_DELAY = 60 * 60  # 1 hour
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    asyncio.create_task(FakeAggDaemon(AGGREGATION_DELAY).start_daemon())
+    asyncio.create_task(NewsAPIAggDaemon(AGGREGATION_DELAY).start_daemon())
     yield
 
 
