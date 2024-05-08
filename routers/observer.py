@@ -21,9 +21,7 @@ async def add_subscriber(_: Request, subscriber: Subscriber = Body(...)):
 
 @observer_router.get("/subscribers")
 async def get_subscribers(_: Request):
-    return {
-        "subscribers": [jsonable_encoder(subscriber) for subscriber in LIST_OBSERVERS]
-    }
+    return {"subscribers": [jsonable_encoder(subscriber) for subscriber in LIST_OBSERVERS]}
 
 
 def update_subscribers(list_source_ids: list[str]) -> None:
